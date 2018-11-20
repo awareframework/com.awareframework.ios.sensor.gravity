@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'com.awareframework.ios.sensor.gravity_Example' do
+  pod 'com.awareframework.ios.sensor.gravity', :path => '../'
+
+  target 'com.awareframework.ios.sensor.gravity_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
