@@ -1,5 +1,5 @@
 import XCTest
-import com.awareframework.ios.sensor.gravity
+import com_awareframework_ios_sensor_gravity
 
 class Tests: XCTestCase {
     
