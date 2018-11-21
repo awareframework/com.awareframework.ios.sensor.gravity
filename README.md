@@ -1,6 +1,6 @@
 # Aware Gravity
 
-[![CI Status](https://img.shields.io/travis/tetujin/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://travis-ci.org/tetujin/com.awareframework.ios.sensor.gravity)
+[![CI Status](https://img.shields.io/travis/awareframework/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://travis-ci.org/awareframework/com.awareframework.ios.sensor.gravity)
 [![Version](https://img.shields.io/cocoapods/v/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
 [![License](https://img.shields.io/cocoapods/l/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
 [![Platform](https://img.shields.io/cocoapods/p/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
@@ -10,6 +10,7 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
+iOS 10 or later
 
 ## Installation
 
@@ -23,6 +24,63 @@ pod 'com.awareframework.ios.sensor.gravity'
 ```swift
 import com_awareframework_ios_sensor_gravity
 ```
+## Public functions
+
+### GravitySensor
+
++ `init(config:GravitySensor.Config?)` : Initializes the gravity sensor with the optional configuration.
++ `start()`: Starts the gyroscope sensor with the optional configuration.
++ `stop()`: Stops the service.
+
+### GravitySensor.Config
+
+Class to hold the configuration of the sensor.
+
+#### Fields
++ `sensorObserver: GravityObserver`: Callback for live data updates.
++ `frequency: Int`: Data samples to collect per second (Hz). (default = 5)
++ `period: Double`: Period to save data in minutes. (default = 1)
++ `threshold: Double`: If set, do not record consecutive points if change in value is less than the set value.
++ `enabled: Boolean` Sensor is enabled or not. (default = `false`)
++ `debug: Boolean` enable/disable logging to Xcode console. (default = `false`)
++ `label: String` Label for the data. (default = "")
++ `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
++ `dbEncryptionKey` Encryption key for the database. (default = `null`)
++ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
++ `dbPath: String` Path of the database. (default = "aware_gyroscope")
++ `dbHost: String` Host for syncing the database. (default = `null`)
+
+## Broadcasts
+
+### Fired Broadcasts
+
++ `GravitySensor.ACTION_AWARE_GYROSCOPE` fired when gyroscope saved data to db after the period ends.
+
+### Received Broadcasts
+
++ `GravitySensor.ACTION_AWARE_GRAVITY_START`: received broadcast to start the sensor.
++ `GravitySensor.ACTION_AWARE_GRAVITY_STOP`: received broadcast to stop the sensor.
++ `GravitySensor.ACTION_AWARE_GRAVITY_SYNC`: received broadcast to send sync attempt to the host.
++ `GravitySensor.ACTION_AWARE_GRAVITY_SET_LABEL`: received broadcast to set the data label. Label is expected in the `GravitySensor.EXTRA_LABEL` field of the intent extras.
+
+## Data Representations
+
+### Gravity Data
+
+Contains the raw sensor data.
+
+| Field     | Type   | Description                                                     |
+| --------- | ------ | --------------------------------------------------------------- |
+| x         | Double  | value of X axis                                                 |
+| y         | Double  | value of Y axis                                                 |
+| z         | Double  | value of Z axis                                                 |
+| label     | String | Customizable label. Useful for data calibration or traceability |
+| deviceId  | String | AWARE device UUID                                               |
+| label     | String | Customizable label. Useful for data calibration or traceability |
+| timestamp | Int64   | unixtime milliseconds since 1970                                |
+| timezone  | Int    | Raw timezone offset of the device                          |
+| os        | String | Operating system of the device (ex. ios)                    |
+
 
 ## Example usage
 ```swift
@@ -37,7 +95,7 @@ gravitySensor.start()
 
 ```swift
 class Observer:GravityObserver{
-    func onChanged(data: GravityData) {
+    func onDataChanged(data: GravityData) {
         // Your code here..
     }
 }

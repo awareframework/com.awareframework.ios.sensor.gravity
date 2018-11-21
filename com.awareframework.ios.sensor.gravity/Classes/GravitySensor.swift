@@ -19,7 +19,7 @@ extension Notification.Name{
 }
 
 public protocol GravityObserver{
-    func onChanged(data:GravityData)
+    func onDataChanged(data:GravityData)
 }
 
 public extension GravitySensor{
@@ -27,17 +27,17 @@ public extension GravitySensor{
     
     public static let ACTION_AWARE_GRAVITY = "ACTION_AWARE_GRAVITY"
     
-    public static let ACTION_AWARE_GRAVITY_START = "com.awareframework.android.sensor.gravity.SENSOR_START"
-    public static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.android.sensor.gravity.SENSOR_STOP"
+    public static let ACTION_AWARE_GRAVITY_START = "com.awareframework.sensor.gravity.SENSOR_START"
+    public static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.sensor.gravity.SENSOR_STOP"
     
-    public static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.android.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
+    public static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
     public static let EXTRA_LABEL = "label"
     
-    public static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.android.sensor.gravity.SENSOR_SYNC"
+    public static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.sensor.gravity.SENSOR_SYNC"
 }
 
 public class GravitySensor: AwareSensor {
-    var CONFIG = Config()
+    public var CONFIG = Config()
     var motion = CMMotionManager()
     var LAST_DATA:CMDeviceMotion?
     var LAST_TS:Double   = 0.0
@@ -123,7 +123,7 @@ public class GravitySensor: AwareSensor {
                     data.eventTimestamp = Int64(motionData.timestamp*1000)
                     
                     if let observer = self.CONFIG.sensorObserver {
-                        observer.onChanged(data: data)
+                        observer.onDataChanged(data: data)
                     }
                     
                     self.dataBuffer.append(data)

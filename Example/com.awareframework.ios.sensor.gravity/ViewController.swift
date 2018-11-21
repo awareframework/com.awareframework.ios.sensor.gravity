@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     }
     
     class Observer:GravityObserver{
-        func onChanged(data: GravityData) {
+        func onDataChanged(data: GravityData) {
             print(data)
         }
     }
