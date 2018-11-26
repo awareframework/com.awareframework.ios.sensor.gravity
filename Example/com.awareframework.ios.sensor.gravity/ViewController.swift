@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         sensor = GravitySensor.init(GravitySensor.Config().apply{config in
             config.debug = true
             config.sensorObserver = Observer()
+            config.frequency = 1
+            config.dbType = .REALM
         })
         sensor?.start()
     }

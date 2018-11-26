@@ -14,6 +14,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9648229AE56BAAB2BA91B6422FB6955F"
+               BuildableName = "Pods_com_awareframework_ios_sensor_gravity_Example.framework"
+               BlueprintName = "Pods-com.awareframework.ios.sensor.gravity_Example"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1916DFC17E06DCEEC6B647427DB8F48"
+               BuildableName = "Pods_com_awareframework_ios_sensor_gravity_Tests.framework"
+               BlueprintName = "Pods-com.awareframework.ios.sensor.gravity_Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
                BuildableName = "com.awareframework.ios.sensor.gravity_Example.app"
                BlueprintName = "com.awareframework.ios.sensor.gravity_Example"

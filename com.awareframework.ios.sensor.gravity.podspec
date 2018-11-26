@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.gravity'
-  s.version          = '0.1.1'
+  s.version       = '0.1.2'
   s.summary          = 'com.awareframework.ios.sensor.gravity (Gravity) is a sensor module for Aware Framework.'
 
 # This description is used to generate tags and improve search results.

@@ -58,7 +58,7 @@ public class GravitySensor: AwareSensor {
          * 5 - sample per second
          * 20 - sample per second
          */
-        public var interval: Int = 5
+        public var frequency: Int = 5
         
         /**
          * Period to save data in minutes. (optional)
@@ -71,9 +71,27 @@ public class GravitySensor: AwareSensor {
          */
         public var threshold: Double = 0.0
         
-        public override init(){}
-        public init(_ init:JSON){
+        public convenience init(_ json:JSON){
+            if let config = json.dictionaryObject {
+                self.init(config)
+            }else{
+                self.init()
+            }
+        }
+        
+        public convenience init(_ config:Dictionary<String,Any>){
+            self.init()
+            if let frequency = config["frequency"] as? Int {
+                self.frequency = frequency
+            }
             
+            if let period = config["period"] as? Double {
+                self.period = period
+            }
+            
+            if let threshold = config["threshold"] as? Double {
+                self.threshold = threshold
+            }
         }
         
         public func apply(closure:(_ config: GravitySensor.Config) -> Void) -> Self{
@@ -95,7 +113,7 @@ public class GravitySensor: AwareSensor {
     
     public override func start() {
         if self.motion.isDeviceMotionAvailable && !self.motion.isDeviceMotionActive{
-            self.motion.deviceMotionUpdateInterval = 1.0/Double(CONFIG.interval)
+            self.motion.deviceMotionUpdateInterval = 1.0/Double(CONFIG.frequency)
             self.motion.startDeviceMotionUpdates(to: .main) { (deviceMotionData, error) in
                 if let motionData = deviceMotionData {
                     let x = motionData.gravity.x

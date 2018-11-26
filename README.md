@@ -1,13 +1,14 @@
-# Aware Gravity
+# AWARE: Gravity
 
 [![CI Status](https://img.shields.io/travis/awareframework/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://travis-ci.org/awareframework/com.awareframework.ios.sensor.gravity)
 [![Version](https://img.shields.io/cocoapods/v/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
 [![License](https://img.shields.io/cocoapods/l/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
 [![Platform](https://img.shields.io/cocoapods/p/com.awareframework.ios.sensor.gravity.svg?style=flat)](https://cocoapods.org/pods/com.awareframework.ios.sensor.gravity)
 
-## Example
+This sensor module allows us to access the current **gravity vector** data. The gravity acceleration vector expressed in the device's reference frame. Also, the total acceleration of the device is equal to gravity plus the acceleration the user imparts to the device ([userAcceleration](https://developer.apple.com/documentation/coremotion/cmdevicemotion/1616149-useracceleration)). The data is provided by CMDeviceMotion in Core Motion library. Please check the link below for details.
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+[ Apple | Getting Processed Device-Motion Data ](https://developer.apple.com/documentation/coremotion/getting_processed_device-motion_data)
+[ Apple | CMDeviceMotion | gravity ](https://developer.apple.com/documentation/coremotion/cmdevicemotion/1616164-gravity)
 
 ## Requirements
 iOS 10 or later
