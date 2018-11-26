@@ -8,6 +8,7 @@
 This sensor module allows us to access the current **gravity vector** data. The gravity acceleration vector expressed in the device's reference frame. Also, the total acceleration of the device is equal to gravity plus the acceleration the user imparts to the device ([userAcceleration](https://developer.apple.com/documentation/coremotion/cmdevicemotion/1616149-useracceleration)). The data is provided by CMDeviceMotion in Core Motion library. Please check the link below for details.
 
 [ Apple | Getting Processed Device-Motion Data ](https://developer.apple.com/documentation/coremotion/getting_processed_device-motion_data)
+
 [ Apple | CMDeviceMotion | gravity ](https://developer.apple.com/documentation/coremotion/cmdevicemotion/1616164-gravity)
 
 ## Requirements
@@ -72,9 +73,9 @@ Contains the raw sensor data.
 
 | Field     | Type   | Description                                                     |
 | --------- | ------ | --------------------------------------------------------------- |
-| x         | Double  | value of X axis                                                 |
-| y         | Double  | value of Y axis                                                 |
-| z         | Double  | value of Z axis                                                 |
+| x         | Double  | X-axis acceleration in G's (gravitational force).    |
+| y         | Double  | Y-axis acceleration in G's (gravitational force).     |
+| z         | Double  | Z-axis acceleration in G's (gravitational force).      |
 | label     | String | Customizable label. Useful for data calibration or traceability |
 | deviceId  | String | AWARE device UUID                                               |
 | label     | String | Customizable label. Useful for data calibration or traceability |
@@ -89,7 +90,6 @@ var gravitySensor = GravitySensor.init(GravitySensor.Config().apply{config in
     config.debug = true
     config.dbType = .REALM
     config.sensorObserver = Observer()
-    config.interval = 1
 })
 gravitySensor.start()
 ```
