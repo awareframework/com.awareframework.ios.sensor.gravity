@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreMotion
-import SwiftyJSON
 import com_awareframework_ios_sensor_core
 
 extension Notification.Name{
@@ -71,16 +70,9 @@ public class GravitySensor: AwareSensor {
          */
         public var threshold: Double = 0.0
         
-        public convenience init(_ json:JSON){
-            if let config = json.dictionaryObject {
-                self.init(config)
-            }else{
-                self.init()
-            }
-        }
-        
-        public convenience init(_ config:Dictionary<String,Any>){
-            self.init()
+        public override func set(config: Dictionary<String, Any>) {
+            super.set(config: config)
+            
             if let frequency = config["frequency"] as? Int {
                 self.frequency = frequency
             }
