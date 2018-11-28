@@ -163,7 +163,7 @@ public class GravitySensor: AwareSensor {
     
     public override func sync(force: Bool = false) {
         if let engine = self.dbEngine {
-            engine.startSync(GravityData.TABLE_NAME, DbSyncConfig.init().apply{config in
+            engine.startSync(GravityData.TABLE_NAME, GravityData.self, DbSyncConfig.init().apply{config in
                 config.debug = self.CONFIG.debug
             })
             self.notificationCenter.post(name: .actionAwareGravitySync, object: nil)
