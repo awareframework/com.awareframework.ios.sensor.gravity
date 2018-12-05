@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'com.awareframework.ios.sensor.gravity'
-  s.version       = '0.2.4'
+  s.version       = '0.2.5'
   s.summary          = 'A Gravity Sensor Module for AWARE Framework.'
 
 # This description is used to generate tags and improve search results.
@@ -44,5 +44,5 @@ https://developer.apple.com/documentation/coremotion/cmmotionmanager
   s.frameworks = 'CoreMotion' #'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   
-  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.1'
+  s.dependency 'com.awareframework.ios.sensor.core', '~> 0.3.3'
 end

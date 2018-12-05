@@ -16,13 +16,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        sensor = GravitySensor.init(GravitySensor.Config().apply{config in
-            config.debug = true
-            config.sensorObserver = Observer()
-            config.frequency = 1
-            config.dbType = .REALM
-        })
-        sensor?.start()
+//        sensor = GravitySensor.init(GravitySensor.Config().apply{config in
+//            config.debug = true
+//            config.sensorObserver = Observer()
+//            config.frequency = 1
+//            config.dbType = .REALM
+//        })
+//        sensor?.start()
     }
     
     class Observer:GravityObserver{

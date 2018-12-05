@@ -26,13 +26,13 @@ public extension GravitySensor{
     
     public static let ACTION_AWARE_GRAVITY = "ACTION_AWARE_GRAVITY"
     
-    public static let ACTION_AWARE_GRAVITY_START = "com.awareframework.sensor.gravity.SENSOR_START"
-    public static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.sensor.gravity.SENSOR_STOP"
+    public static let ACTION_AWARE_GRAVITY_START = "com.awareframework.ios.sensor.gravity.SENSOR_START"
+    public static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.ios.sensor.gravity.SENSOR_STOP"
     
-    public static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
+    public static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.ios.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
     public static let EXTRA_LABEL = "label"
     
-    public static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.sensor.gravity.SENSOR_SYNC"
+    public static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.ios.sensor.gravity.SENSOR_SYNC"
 }
 
 public class GravitySensor: AwareSensor {
@@ -92,7 +92,7 @@ public class GravitySensor: AwareSensor {
         }
     }
     
-    override convenience init(){
+    public override convenience init(){
         self.init(GravitySensor.Config())
     }
     
@@ -138,6 +138,7 @@ public class GravitySensor: AwareSensor {
                     
                     self.dataBuffer.append(data)
                     
+                    // print(currentTime - self.LAST_SAVE + (self.CONFIG.period * 60))
                     if currentTime < self.LAST_SAVE + (self.CONFIG.period * 60) {
                         return
                     }
@@ -155,7 +156,7 @@ public class GravitySensor: AwareSensor {
     }
     
     public override func stop() {
-        if motion.isMagnetometerAvailable && motion.isMagnetometerActive {
+        if motion.isDeviceMotionAvailable && motion.isDeviceMotionActive {
             motion.stopMagnetometerUpdates()
             self.notificationCenter.post(name: .actionAwareGravityStop, object: nil)
         }
@@ -168,5 +169,10 @@ public class GravitySensor: AwareSensor {
             })
             self.notificationCenter.post(name: .actionAwareGravitySync, object: nil)
         }
+    }
+    
+    public func set(label:String){
+        self.CONFIG.label = label
+        self.notificationCenter.post(name:.actionAwareGravitySetLabel, object:nil, userInfo:[GravitySensor.EXTRA_LABEL:label])
     }
 }
