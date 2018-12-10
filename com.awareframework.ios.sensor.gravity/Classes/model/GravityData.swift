@@ -9,7 +9,7 @@ import UIKit
 import com_awareframework_ios_sensor_core
 
 public class GravityData: AwareObject {
-    public static var TABLE_NAME = "GravityData"
+    public static var TABLE_NAME = "gravityData"
     
     @objc dynamic public var x:Double = 0.0
     @objc dynamic public var y:Double = 0.0

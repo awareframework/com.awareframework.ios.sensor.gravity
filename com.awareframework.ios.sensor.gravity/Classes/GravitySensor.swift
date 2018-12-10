@@ -74,6 +74,11 @@ public class GravitySensor: AwareSensor {
          */
         public var threshold: Double = 0.0
         
+        public override init() {
+            super.init()
+            dbPath = "aware_gravity"
+        }
+        
         public override func set(config: Dictionary<String, Any>) {
             super.set(config: config)
             
@@ -135,6 +140,7 @@ public class GravitySensor: AwareSensor {
                     data.y = motionData.gravity.y
                     data.z = motionData.gravity.z
                     data.eventTimestamp = Int64(motionData.timestamp*1000)
+                    data.label = self.CONFIG.label
                     
                     if let observer = self.CONFIG.sensorObserver {
                         observer.onDataChanged(data: data)
