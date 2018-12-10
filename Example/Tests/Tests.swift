@@ -280,11 +280,11 @@ class Tests: XCTestCase {
     
     func testSensorModule(){
         
-        //        #if targetEnvironment(simulator)
-        //
-        //        print("This test requires a real Gravity.")
-        //
-        //        #else
+        #if targetEnvironment(simulator)
+
+        print("This test requires a real Gravity.")
+
+        #else
         
         let sensor = GravitySensor.init(GravitySensor.Config().apply{ config in
             config.debug = true
@@ -331,6 +331,6 @@ class Tests: XCTestCase {
         wait(for: [expect,storageExpect], timeout: 65)
         sensor.stop()
         
-        //        #endif
+        #endif
     }
 }
