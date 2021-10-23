@@ -23,20 +23,20 @@ public protocol GravityObserver{
 }
 
 public extension GravitySensor{
-    public static let TAG = "AWARE::Gravity"
+    static let TAG = "AWARE::Gravity"
     
-    public static let ACTION_AWARE_GRAVITY = "ACTION_AWARE_GRAVITY"
+    static let ACTION_AWARE_GRAVITY = "ACTION_AWARE_GRAVITY"
     
-    public static let ACTION_AWARE_GRAVITY_START = "com.awareframework.ios.sensor.gravity.SENSOR_START"
-    public static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.ios.sensor.gravity.SENSOR_STOP"
+    static let ACTION_AWARE_GRAVITY_START = "com.awareframework.ios.sensor.gravity.SENSOR_START"
+    static let ACTION_AWARE_GRAVITY_STOP = "com.awareframework.ios.sensor.gravity.SENSOR_STOP"
     
-    public static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.ios.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
-    public static let EXTRA_LABEL = "label"
+    static let ACTION_AWARE_GRAVITY_SET_LABEL = "com.awareframework.ios.sensor.gravity.ACTION_AWARE_GRAVITY_SET_LABEL"
+    static let EXTRA_LABEL = "label"
     
-    public static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.ios.sensor.gravity.SENSOR_SYNC"
-    public static let ACTION_AWARE_GRAVITY_SYNC_COMPLETION = "com.awareframework.ios.sensor.gravity.SENSOR_SYNC_COMPLETION"
-    public static let EXTRA_STATUS = "status"
-    public static let EXTRA_ERROR = "error"
+    static let ACTION_AWARE_GRAVITY_SYNC = "com.awareframework.ios.sensor.gravity.SENSOR_SYNC"
+    static let ACTION_AWARE_GRAVITY_SYNC_COMPLETION = "com.awareframework.ios.sensor.gravity.SENSOR_SYNC_COMPLETION"
+    static let EXTRA_STATUS = "status"
+    static let EXTRA_ERROR = "error"
 }
 
 public class GravitySensor: AwareSensor {
