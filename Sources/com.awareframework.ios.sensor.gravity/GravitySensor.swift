@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreMotion
-import com_awareframework_ios_sensor_core
+import com_awareframework_ios_core
 
 extension Notification.Name{
     public static let actionAwareGravity      = Notification.Name(GravitySensor.ACTION_AWARE_GRAVITY)
@@ -46,6 +46,13 @@ public class GravitySensor: AwareSensor {
     var LAST_TS:Double   = Date().timeIntervalSince1970
     var LAST_SAVE:Double = Date().timeIntervalSince1970
     public var dataBuffer = Array<GravityData>()
+    private let motionQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.name = "com.awareframework.ios.sensor.gravity.motion.queue"
+        queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .userInitiated
+        return queue
+    }()
     
     public class Config:SensorConfig{
         /**
@@ -115,7 +122,7 @@ public class GravitySensor: AwareSensor {
     public override func start() {
         if self.motion.isDeviceMotionAvailable && !self.motion.isDeviceMotionActive{
             self.motion.deviceMotionUpdateInterval = 1.0/Double(CONFIG.frequency)
-            self.motion.startDeviceMotionUpdates(to: .main) { (deviceMotionData, error) in
+            self.motion.startDeviceMotionUpdates(to: motionQueue) { (deviceMotionData, error) in
                 if let motionData = deviceMotionData {
                     let x = motionData.gravity.x
                     let y = motionData.gravity.y
@@ -134,7 +141,7 @@ public class GravitySensor: AwareSensor {
                     let currentTime:Double = Date().timeIntervalSince1970
                     self.LAST_TS = currentTime
                     
-                    let data = GravityData()
+                    var data = GravityData()
                     data.timestamp = Int64(currentTime*1000)
                     data.x = motionData.gravity.x
                     data.y = motionData.gravity.y
@@ -184,14 +191,15 @@ public class GravitySensor: AwareSensor {
     
     public override func stop() {
         if motion.isDeviceMotionAvailable && motion.isDeviceMotionActive {
-            motion.stopMagnetometerUpdates()
+            motion.stopDeviceMotionUpdates()
+            motionQueue.cancelAllOperations()
             self.notificationCenter.post(name: .actionAwareGravityStop, object: self)
         }
     }
     
     public override func sync(force: Bool = false) {
         if let engine = self.dbEngine {
-            engine.startSync(GravityData.TABLE_NAME, GravityData.self, DbSyncConfig.init().apply{config in
+            engine.startSync(DbSyncConfig.init().apply{config in
                 config.debug = self.CONFIG.debug
                 config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.gravity.sync.queue")
                 config.completionHandler = { (status, error) in

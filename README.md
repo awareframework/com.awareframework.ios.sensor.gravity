@@ -13,7 +13,7 @@ iOS 13 or later
 
 ## Installation
 
-You can integrate this framework into your project via Swift Package Manager (SwiftPM) or CocoaPods.
+You can integrate this framework into your project via Swift Package Manager (SwiftPM).
 
 ### SwiftPM
 1. Open Package Manager Windows
@@ -25,20 +25,6 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 3. Import the package into your target.
 
 4. Import com.awareframework.ios.sensor.gravity library into your source code.
-```swift
-import com_awareframework_ios_sensor_gravity
-```
-
-### CocoaPods
-
-com.awareframework.ios.sensor.gravity is available through [CocoaPods](https://cocoapods.org). 
-
-1. To install it, simply add the following line to your Podfile:
-```ruby
-pod 'com.awareframework.ios.sensor.gravity'
-```
-
-2. Import com.awareframework.ios.sensor.gravity library into your source code.
 ```swift
 import com_awareframework_ios_sensor_gravity
 ```
@@ -125,7 +111,7 @@ Yuuki Nishiyama (The University of Tokyo), nishiyama@csis.u-tokyo.ac.jp
 
 ## License
 
-Copyright (c) 2021 AWARE Mobile Context Instrumentation Middleware/Framework (http://www.awareframework.com)
+Copyright (c) 2025 AWARE Mobile Context Instrumentation Middleware/Framework (http://www.awareframework.com)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
