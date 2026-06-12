@@ -20,7 +20,7 @@ You can integrate this framework into your project via Swift Package Manager (Sw
     * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...` 
 
 2. Find the package using the manager
-    * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.accelerometer.git`
+    * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.gravity.git`
 
 3. Import the package into your target.
 
@@ -34,7 +34,7 @@ import com_awareframework_ios_sensor_gravity
 ### GravitySensor
 
 + `init(config:GravitySensor.Config?)` : Initializes the gravity sensor with the optional configuration.
-+ `start()`: Starts the gyroscope sensor with the optional configuration.
++ `start()`: Starts the gravity sensor with the optional configuration.
 + `stop()`: Stops the service.
 
 ### GravitySensor.Config
@@ -59,7 +59,7 @@ Class to hold the configuration of the sensor.
 
 ### Fired Broadcasts
 
-+ `GravitySensor.ACTION_AWARE_GYROSCOPE` fired when gyroscope saved data to db after the period ends.
++ `GravitySensor.ACTION_AWARE_GRAVITY` fired when gravity saved data to db after the period ends.
 
 ### Received Broadcasts
 
@@ -74,24 +74,25 @@ Class to hold the configuration of the sensor.
 
 Contains the raw sensor data.
 
-| Field     | Type   | Description                                                     |
-| --------- | ------ | --------------------------------------------------------------- |
-| x         | Double  | X-axis acceleration in G's (gravitational force).    |
-| y         | Double  | Y-axis acceleration in G's (gravitational force).     |
-| z         | Double  | Z-axis acceleration in G's (gravitational force).      |
-| label     | String | Customizable label. Useful for data calibration or traceability |
-| deviceId  | String | AWARE device UUID                                               |
-| label     | String | Customizable label. Useful for data calibration or traceability |
-| timestamp | Int64   | unixtime milliseconds since 1970                                |
-| timezone  | Int    | Raw timezone offset of the device                          |
-| os        | String | Operating system of the device (ex. ios)                    |
+| Field          | Type   | Description                                                     |
+| -------------- | ------ | --------------------------------------------------------------- |
+| x              | Double | X-axis acceleration in G's (gravitational force).               |
+| y              | Double | Y-axis acceleration in G's (gravitational force).               |
+| z              | Double | Z-axis acceleration in G's (gravitational force).               |
+| eventTimestamp | Int64  | Unixtime milliseconds of the actual sensor event                |
+| accuracy       | Int    | Accuracy of the sensor data                                     |
+| label          | String | Customizable label. Useful for data calibration or traceability |
+| deviceId       | String | AWARE device UUID                                               |
+| timestamp      | Int64  | unixtime milliseconds since 1970                                |
+| timezone       | Int    | Raw timezone offset of the device                               |
+| os             | String | Operating system of the device (ex. ios)                        |
+| jsonVersion    | Int    | JSON schema version                                             |
 
 
 ## Example usage
 ```swift
 var gravitySensor = GravitySensor.init(GravitySensor.Config().apply{config in
     config.debug = true
-    config.dbType = .REALM
     config.sensorObserver = Observer()
 })
 gravitySensor.start()

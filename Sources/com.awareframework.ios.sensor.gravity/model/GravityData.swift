@@ -10,7 +10,7 @@ public struct GravityData: BaseDbModelSQLite {
     public var timezone: Int = AwareUtils.getTimeZone()
     public var os: String = "iOS"
     public var jsonVersion: Int = 1
-    public static let databaseTableName = "gravityData"
+    public static let databaseTableName = "ios_gravity"
 
     public var x: Double = 0.0
     public var y: Double = 0.0

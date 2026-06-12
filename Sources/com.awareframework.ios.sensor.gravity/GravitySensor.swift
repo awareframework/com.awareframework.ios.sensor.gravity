@@ -116,6 +116,9 @@ public class GravitySensor: AwareSensor {
         super.init()
         self.CONFIG = config
         self.initializeDbEngine(config: config)
+        super.syncConfig = DbSyncConfig().apply { c in
+            c.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.gravity.sync.queue")
+        }
         if config.debug{ print(GravitySensor.TAG, "Gravity sensor is created.") }
     }
     
@@ -198,22 +201,15 @@ public class GravitySensor: AwareSensor {
     }
     
     public override func sync(force: Bool = false) {
-        if let engine = self.dbEngine {
-            engine.startSync(DbSyncConfig.init().apply{config in
-                config.debug = self.CONFIG.debug
-                config.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.gravity.sync.queue")
-                config.completionHandler = { (status, error) in
-                    var userInfo: Dictionary<String,Any> = ["status":status]
-                    if let e = error {
-                        userInfo["error"] = e
-                    }
-                    self.notificationCenter.post(name: .actionAwareGravitySyncCompletion,
-                                                 object: self,
-                                                 userInfo:userInfo)
-                }
-            })
-            self.notificationCenter.post(name: .actionAwareGravitySync, object: self)
+        guard let engine = self.dbEngine, let syncConfig = self.syncConfig else { return }
+        syncConfig.debug = self.CONFIG.debug
+        syncConfig.completionHandler = { (status, error) in
+            var userInfo: Dictionary<String,Any> = ["status": status]
+            if let e = error { userInfo["error"] = e }
+            self.notificationCenter.post(name: .actionAwareGravitySyncCompletion, object: self, userInfo: userInfo)
         }
+        engine.startSync(syncConfig)
+        self.notificationCenter.post(name: .actionAwareGravitySync, object: self)
     }
     
     public override func set(label:String){
