@@ -45,6 +45,7 @@ public class GravitySensor: AwareSensor {
     var LAST_DATA:CMDeviceMotion?
     var LAST_TS:Double   = Date().timeIntervalSince1970
     var LAST_SAVE:Double = Date().timeIntervalSince1970
+    private var bootReferenceTime: Double = 0
     public var dataBuffer = Array<GravityData>()
     private let motionQueue: OperationQueue = {
         let queue = OperationQueue()
@@ -124,6 +125,7 @@ public class GravitySensor: AwareSensor {
     
     public override func start() {
         if self.motion.isDeviceMotionAvailable && !self.motion.isDeviceMotionActive{
+            bootReferenceTime = Date().timeIntervalSince1970 - ProcessInfo.processInfo.systemUptime
             self.motion.deviceMotionUpdateInterval = 1.0/Double(CONFIG.frequency)
             self.motion.startDeviceMotionUpdates(to: motionQueue) { (deviceMotionData, error) in
                 if let motionData = deviceMotionData {
@@ -140,16 +142,16 @@ public class GravitySensor: AwareSensor {
                     }
                     
                     self.LAST_DATA = motionData
-                    
+
                     let currentTime:Double = Date().timeIntervalSince1970
                     self.LAST_TS = currentTime
-                    
+
                     var data = GravityData()
                     data.timestamp = Int64(currentTime*1000)
                     data.x = motionData.gravity.x
                     data.y = motionData.gravity.y
                     data.z = motionData.gravity.z
-                    data.eventTimestamp = Int64(motionData.timestamp*1000)
+                    data.eventTimestamp = Int64((self.bootReferenceTime + motionData.timestamp)*1000)
                     data.label = self.CONFIG.label
                     
                     if let observer = self.CONFIG.sensorObserver {
