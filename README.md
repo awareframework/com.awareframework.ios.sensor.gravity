@@ -17,7 +17,7 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 
 ### SwiftPM
 1. Open Package Manager Windows
-    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...` 
+    * Open `Xcode` -> Select `Menu Bar` -> `File` -> `App Package Dependencies...`
 
 2. Find the package using the manager
     * Select `Search Package URL` and type `git@github.com:awareframework/com.awareframework.ios.sensor.gravity.git`
@@ -29,11 +29,11 @@ You can integrate this framework into your project via Swift Package Manager (Sw
 import com_awareframework_ios_sensor_gravity
 ```
 
-## Public functions
+## Public Functions
 
 ### GravitySensor
 
-+ `init(config:GravitySensor.Config?)` : Initializes the gravity sensor with the optional configuration.
++ `init(config:GravitySensor.Config?)`: Initializes the gravity sensor with the optional configuration.
 + `start()`: Starts the gravity sensor with the optional configuration.
 + `stop()`: Stops the service.
 
@@ -42,24 +42,25 @@ import com_awareframework_ios_sensor_gravity
 Class to hold the configuration of the sensor.
 
 #### Fields
+
 + `sensorObserver: GravityObserver`: Callback for live data updates.
-+ `frequency: Int`: Data samples to collect per second (Hz). (default = 5)
-+ `period: Double`: Period to save data in minutes. (default = 1)
++ `samplingFrequencyHz: Int`: Data samples to collect per second (Hz). (default = `5`)
++ `saveIntervalSeconds: Double`: Interval in seconds at which buffered data is saved to the database. (default = `60`)
 + `threshold: Double`: If set, do not record consecutive points if change in value is less than the set value.
-+ `enabled: Boolean` Sensor is enabled or not. (default = `false`)
-+ `debug: Boolean` enable/disable logging to Xcode console. (default = `false`)
-+ `label: String` Label for the data. (default = "")
-+ `deviceId: String` Id of the device that will be associated with the events and the sensor. (default = "")
-+ `dbEncryptionKey` Encryption key for the database. (default = `null`)
-+ `dbType: Engine` Which db engine to use for saving data. (default = `Engine.DatabaseType.NONE`)
-+ `dbPath: String` Path of the database. (default = "aware_gravity")
-+ `dbHost: String` Host for syncing the database. (default = `null`)
++ `enabled: Bool`: Sensor is enabled or not. (default = `false`)
++ `debug: Bool`: Enable/disable logging. (default = `false`)
++ `label: String`: Label for the data. (default = `""`)
++ `deviceId: String`: Id of the device that will be associated with the events and the sensor. (default = `""`)
++ `dbEncryptionKey: String?`: Encryption key for the database. (default = `nil`)
++ `dbType: DatabaseType`: Which db engine to use for saving data. (default = `.none`)
++ `dbPath: String`: Path of the database. (default = `"aware_gravity"`)
++ `dbHost: String?`: Host for syncing the database. (default = `nil`)
 
 ## Broadcasts
 
 ### Fired Broadcasts
 
-+ `GravitySensor.ACTION_AWARE_GRAVITY` fired when gravity saved data to db after the period ends.
++ `GravitySensor.ACTION_AWARE_GRAVITY`: fired when gravity saved data to db after the save interval ends.
 
 ### Received Broadcasts
 
@@ -89,9 +90,9 @@ Contains the raw sensor data.
 | jsonVersion    | Int    | JSON schema version                                             |
 
 
-## Example usage
+## Example Usage
 ```swift
-var gravitySensor = GravitySensor.init(GravitySensor.Config().apply{config in
+var gravitySensor = GravitySensor.init(GravitySensor.Config().apply { config in
     config.debug = true
     config.sensorObserver = Observer()
 })
