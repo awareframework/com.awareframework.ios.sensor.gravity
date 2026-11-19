@@ -88,6 +88,7 @@ public class GravitySensor: AwareSensor {
         
         public override init() {
             super.init()
+            dbTableName = GravityData.databaseTableName
             dbPath = "aware_gravity"
         }
         
@@ -117,10 +118,32 @@ public class GravitySensor: AwareSensor {
         self.init(GravitySensor.Config())
     }
     
+
+    /// Creates this sensor's table if it does not exist yet, so that the first save does not fail.
+    /// Failures are logged: without the table, the data cannot be saved or uploaded.
+    private func initializeTables() {
+        guard CONFIG.dbType == .sqlite else { return }
+        guard let queue = (dbEngine as? SQLiteEngine)?.getSQLiteInstance() else {
+            print(GravitySensor.TAG, "[Error] Cannot open the database '\(CONFIG.dbPath)'. The table is not created.")
+            return
+        }
+        let tables: [(name: String, create: () throws -> Void)] = [
+            (GravityData.databaseTableName, { try GravityData.createTable(queue: queue) }),
+        ]
+        for table in tables {
+            do {
+                try table.create()
+            } catch {
+                print(GravitySensor.TAG, "[Error] Cannot create the table '\(table.name)': \(error)")
+            }
+        }
+    }
+
     public init(_ config: GravitySensor.Config){
         super.init()
         self.CONFIG = config
         self.initializeDbEngine(config: config)
+        initializeTables()
         super.syncConfig = DbSyncConfig().apply { c in
             c.dispatchQueue = DispatchQueue(label: "com.awareframework.ios.sensor.gravity.sync.queue")
         }
